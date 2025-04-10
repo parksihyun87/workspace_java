@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/BookMarket/BookMarket.iml" filepath="$PROJECT_DIR$/BookMarket/BookMarket.iml" />
+      <module fileurl="file://$PROJECT_DIR$/first project/first project.iml" filepath="$PROJECT_DIR$/first project/first project.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/workspace_java.iml" filepath="$PROJECT_DIR$/.idea/workspace_java.iml" />
+    </modules>
+  </component>
+</project>
