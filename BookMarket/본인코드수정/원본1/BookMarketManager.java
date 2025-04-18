@@ -1,21 +1,19 @@
 import java.util.Scanner;
 
 public class BookMarketManager {
-    private Book[] mBook = new Book[3];
-    private Cart mCart = new Cart();
 
-    public BookMarketManager() {
-        this.mBook[0]=new Book("ISBN1234","쉽게 배우는 JSP 웹프로그래밍",27000,
-                "송미영","단계별로 구현하여 배우는 JSP 프로그래밍","IT전문서",
-                "2018/10/08");
-        this.mBook[1]=new Book("ISBN1235","안드로이드 프로그래밍",33000,"우재남",
-                "실습단계별 명확한 멘토링!","IT전문서","2022/01/22");
+     private Book[] bookList=new Book[3];
+     private Cart mcart=new Cart();
 
-        this.mBook[2]=new Book("ISBN1236","스크래치", 22000,"고광일",
-                "컴퓨팅 사고력을 키우는 블록 코딩","컴퓨터 입문","2019/06/10");
+    public BookMarketManager(){
+    bookList[0]= new Book("ISBN1234","쉽게 배우는 JSP 웹프로그래밍",27000,"송미영","단계별로 쇼핑몰을 구현하며 배우는 JSP 웹프로그래밍","IT전문서","2018/10/08");
+    bookList[1]= new Book("ISBN1235","안드로이드 프로그래밍",33000,"우재남","실습 단계별 명쾌한 멘토링!","IT전문서","2022/01/22");
+    bookList[2]= new Book("ISBN1236","스크래치",22000,"고광일","컴퓨팅 사고력을 키우는 블록 코딩","컴퓨터 입문","2019/06/10");
     }
+    //생성자 함수를 멤버 변수의 초기값을 지정해 주는 것으로 바꿈.
 
-    public void run(){
+    public void run() {
+
         Scanner input = new Scanner(System.in);
         System.out.print("당신의 이름을 입력하세요 : ");
         String name = input.nextLine();
@@ -23,6 +21,8 @@ public class BookMarketManager {
         String phone = input.nextLine();
 
         Person user = new Person(name, phone);
+        // 여기서 유저 객체 만듬, 이름과 폰번호 넣어서 만듬.
+        // 유저가 생겼음.
 
         while(true){
             boolean endflag=false;
@@ -62,6 +62,7 @@ public class BookMarketManager {
             }
         }
     }
+
     public void menuIntroduction() {
         String greeting = "Welcome to Shopping Mall";
         String tagline = "Welcome to Book Market!";
@@ -84,67 +85,52 @@ public class BookMarketManager {
                 " 전화번호 " + user.getPhone());
     }
 
-    public void menuCartItemList() {
-        this.mCart.printCart();
+    public void menuCartItemList(){
+        mcart.printCart();
     }
 
     public void menuCartClear() {
         System.out.println("장바구니 비우기");
-        this.mCart.clearCart();
+        mcart.emptyCart();
     }
 
-    public void bookList(){
-        for(int i=0; i<this.mBook.length; i++) {
-            System.out.print("도서 ID :");
-            System.out.println(this.mBook[i].getIsbn());
-            System.out.print("도서 이름: ");
-            System.out.println(this.mBook[i].getTitle());
-            System.out.print("도서 가격: ");
-            System.out.println(this.mBook[i].getPrice());
-            System.out.print("저자 : ");
-            System.out.println(this.mBook[i].getAuthor());
-            System.out.print("도서 설명 : ");
-            System.out.println(this.mBook[i].getDescription());
-            System.out.print("분류 : ");
-            System.out.println(this.mBook[i].getCategory());
-            System.out.print("출판일 : ");
-            System.out.println(this.mBook[i].getPublishDate());
-            System.out.println("======================================");
-        }
-    }
-
+    // 장바구니 항목 추가 구현
     public void menuCartAddItem() {
         System.out.println("장바구니 항목 추가하기 ");
-
-        bookList();
+        
+        // 책 선택 위한 목록 출력
+        for (int i = 0; i < bookList.length; i++) {
+            System.out.print(bookList[i].getIsbn() + " | ");
+            System.out.println();
+        }
 
         while (true) {
             boolean exit = false;
             System.out.print("장바구니에 추가할 도서의 ID를 입력하세요 : ");
-
             Scanner input = new Scanner(System.in);
             String bookid = input.nextLine();
 
             int index = -1;
 
-            for (int i = 0; i < this.mBook.length; i++) {
-                if (bookid.equals(this.mBook[i].getIsbn())) {
-                    index = i;
+            for (int i = 0; i < bookList.length; i++) {
+                if (bookid.equals(bookList[i].getIsbn())) {
+                    index = i;// 장바구니에 추가되고 있는 도서의 id
                     break;
                 }
             }
 
             if (index != -1) {
+                // 만약에 책이 있으면 해당 실행
                 System.out.println("장바구니에 추가하겠습니까? Y|N");
                 String yn = input.nextLine();
 
                 if (yn.toUpperCase().equals("Y")) {
-                    if(this.mCart.isCartInBook(bookid)){
-                        this.mCart.inCreaseBookCount(bookid);
+                    if(mcart.isCartInBook(bookid)){
+                       mcart.increaseBookCount(bookid);
                     }else{
-                        this.mCart.appendBook(this.mBook[index]);
+                       mcart.appendBook(bookList[index]);
                     }
-                    System.out.println(this.mBook[index].getTitle() + "이(가) 장바구니에 추가되었습니다.");
+                    System.out.println(bookList[index].getTitle() + "가 장바구니에 추가되었습니다.");
                 }
                 exit = true;
             } else {
@@ -158,41 +144,14 @@ public class BookMarketManager {
         }
     }
 
-
-
     public void menuCartRemoveItemCount() {
-        System.out.println("장바구니에 항목 수량 줄이기");
-        while(true){
-            this.mCart.printCart();
-            System.out.println("수량을 줄이실 도서ID를 입력하세요 : ");
-            Scanner input = new Scanner(System.in);
-            String bookId = input.nextLine();
-            if(!this.mCart.isCartInBook(bookId)){
-                System.out.println("장바구니에 존해하는 도서가 아닙니다.");
-                continue;
-            }
-            System.out.println(bookId + "의 수량을 줄이시겠습니까? Y|N");
-            String yn = input.nextLine();
-            if(yn.toUpperCase().equals("Y")){
-                Book book = this.mCart.deCreaseBookCount(bookId);
-                System.out.println( book.getTitle() + " 한권이 장바구니에서 삭제되었습니다. ");
-            }
-            break;
-        }
+    //        System.out.println("장바구니에 항목 수량 줄이기");
+    //
     }
 
     public void menuCartRemoveItem() {
         System.out.println("장바구니의 항목 삭제하기");
-        this.mCart.printCart();
-        System.out.println("삭제할 항목의 ISBN을 입력하세요 : ");
-        Scanner input = new Scanner(System.in);
-        String bookId = input.nextLine();
-        if(this.mCart.isCartInBook(bookId)){
-            Book book = this.mCart.removeCartItem(bookId);
-            System.out.println(book.getTitle() + "가 장바구니에서 삭제되었습니다.");
-        }else{
-            System.out.println("장바구니에 없는 책입니다.");
-        }
+        mcart.deleteCart();
     }
 
     public void menuCartBill() {

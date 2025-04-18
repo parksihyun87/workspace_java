@@ -1,4 +1,5 @@
 public class CartItem {
+    //북 객체를 담아내는 함수의 역할을 한다.
     private Book book;
     private int count;
     private int totalPrice;
@@ -16,7 +17,7 @@ public class CartItem {
     }
 
     public void updateTotalPrice(){
-        this.totalPrice = this.book.getPrice()* this.count;
+        this.totalPrice = this.book.getPrice() * this.count;
     }
 
     public Book getBook(){

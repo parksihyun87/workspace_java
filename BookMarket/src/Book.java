@@ -1,25 +1,23 @@
 public class Book {
-    private String isbn;
-    private String title;
-    private int price;// int로 잡아두기.
-    private String writter;
-    private String description;
-    private String category;
-    private String date;
+    String isbn;
+    String title;
+    int price;
+    String author;
+    String description;
+    String category;
+    String publishDate;
 
-
-    public Book(String isbn,String title,int price,String writter,String description,String category, String date){
-        this.isbn=isbn;
-        this.title=title;
-        this.price=price;
-        this.writter=writter;
-        this.description=description;
-        this.category=category;
-        this.date=date;
+    public Book(String isbn, String title, int price, String author, String description, String category, String publishDate) {
+        this.isbn = isbn;
+        this.title = title;
+        this.price = price;
+        this.author = author;
+        this.description = description;
+        this.category = category;
+        this.publishDate = publishDate;
     }
 
-    //읽기 부분
-    public String getIsbn(){
+    public String getIsbn() {
         return isbn;
     }
 
@@ -31,8 +29,8 @@ public class Book {
         return price;
     }
 
-    public String getWritter() {
-        return writter;
+    public String getAuthor() {
+        return author;
     }
 
     public String getDescription() {
@@ -43,7 +41,27 @@ public class Book {
         return category;
     }
 
-    public String getDate() {
-        return date;
+    public String getPublishDate() {
+        return publishDate;
+    }
+
+    public void setIsbn(String isbn) {
+        this.isbn = isbn;
+    }
+
+    public void setPrice(int price) {
+        this.price = price;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
+    }
+
+    public void setPublishDate(String publishDate) {
+        this.publishDate = publishDate;
     }
 }

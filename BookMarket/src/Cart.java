@@ -1,63 +1,94 @@
-import java.util.Scanner;
-
 public class Cart {
-    private CartItem[] mCart = new CartItem[3];
-    // 빈카트를 만들어서 북담을 배열을 만듬. 이 안에서 중복여부로 어떤 것을 늘릴지 선택.
+    private CartItem[]  mCart = new CartItem[3];
     private int mCartItemCount = 0;
 
     public boolean isCartInBook(String bookId){
-        for(int i=0; i<mCartItemCount; i++){
-            if(bookId.equals(mCart[i].getBook().getIsbn())){
+        for(int i=0; i<this.mCartItemCount; i++){
+            if(bookId.equals(this.mCart[i].getBook().getIsbn())){
                 return true;
             }
         }
         return false;
     }
 
+    public void clearCart(){
+        this.mCart = new CartItem[3];
+        this.mCartItemCount = 0;
+    }
+
+    public Book removeCartItem(String bookId){
+        Book book = null;
+        for(int i=0; i<this.mCartItemCount; i++){
+            if(this.mCart[i].getBook().getIsbn().equals(bookId)){
+                book = this.mCart[i].getBook();
+                this.removeCartItem(i);
+                break;
+            }
+        }
+        return book;
+    }
+
     public void appendBook(Book book){
-        mCart[mCartItemCount++] = new CartItem(book);
+        this.mCart[this.mCartItemCount] = new CartItem(book);
+        this.mCartItemCount++;
     }
 
-    public void increaseBookCount(String bookid){
-        for(int i=0; i<mCartItemCount; i++){
-            if(bookid.equals(mCart[i].getBook().getIsbn())){
-                mCart[i].setCount(mCart[i].getCount() + 1);
+    public void inCreaseBookCount(String bookid){
+        for(int i=0; i<this.mCartItemCount; i++) {
+            if(this.mCart[i].getBook().getIsbn().equals(bookid)) {
+                this.mCart[i].setCount(this.mCart[i].getCount()+1);
+                return;
             }
         }
     }
 
-    public void menuCartItemList() {
-        System.out.println("장바구니 상품 목록 보기");
-        // mcart[i]에는 ()3가지가 담긴 카트아이템 자료형의 객체가 생성된다.
-        // 카트아이템 클래스의 객체는 북객체 자체와, 카운트, 토탈프라이스가 주 구성원
-        System.out.println("도서ID|상품개수|총 가격");
-        for(int i=0;i<mCartItemCount;i++){
-            System.out.println(mCart[i].getBook().getIsbn()+"|"
-                    +mCart[i].getCount()+"|"
-                    +mCart[i].getTotalPrice()+"|");
-        }
-    }
-
-    public void menuCartRemoveItem(){
-        System.out.println("장바구니 항목 줄이기");
-        for(int i=0;i<mCartItemCount;i++){
-            System.out.println(mCart[i].getBook().getIsbn()+"|"
-                    +mCart[i].getCount()+"|"
-                    +mCart[i].getTotalPrice()+"|");
-        }
-
-        System.out.println("줄일 ISBN ID 선택");
-        Scanner s1= new Scanner(System.in);
-        String inputIsbn=s1.nextLine();
-        //포문
-        for(int i=0;i<mCartItemCount;i++){
-            if(mCart[i].getBook().getIsbn().equals(inputIsbn)){
-                mCart[i].setCount(mCart[i].getCount()-1);
-            }else{
-                System.out.println("잘못된 ISBN입니다.");
+    public Book deCreaseBookCount(String bookid){
+        Book book = null;
+        for(int i=0 ; i< this.mCartItemCount; i++){
+            if(this.mCart[i].getBook().getIsbn().equals(bookid)){
+                book = this.mCart[i].getBook();
+                this.mCart[i].setCount(this.mCart[i].getCount() - 1);
+                if(this.mCart[i].getCount() == 0){
+                    System.out.println("수량이 0이 되어 항목을 장바구니에서 삭제합니다.");
+                    this.removeCartItem(i);
+                    break;
+                }
             }
         }
+        return book;
     }
 
+    private void removeCartItem(int index){
+//        for(int i=index; i<this.mCartItemCount-1; i++){
+//            this.mCart[i] = this.mCart[i+1];
+//        }
+//
+//        this.mCart[this.mCartItemCount-1] = null;
+//        this.mCartItemCount--;
+
+        CartItem[] newCarItemList = new CartItem[3];
+        int number = 0;
+        for(int i =0; i<this.mCartItemCount; i++){
+            if(i != index){
+                newCarItemList[number++] = this.mCart[i];
+            }
+        }
+        this.mCart=newCarItemList;
+        this.mCartItemCount--;
+    }
+
+    public void printCart(){
+        System.out.println("장바구니 상품 목록 보기 :");
+        System.out.println("---------------------------------------------");
+        System.out.println("도서ID\t\t|수량\t\t\t\t|총가격");
+
+        for (int i = 0; i < this.mCartItemCount; i++) {
+            System.out.print((i+1)+" "+this.mCart[i].getBook().getIsbn() + "\t| ");
+            System.out.print(this.mCart[i].getCount() + "\t\t\t\t| ");
+            System.out.print(this.mCart[i].getTotalPrice());
+            System.out.println();
+        }
+        System.out.println("---------------------------------------------");
+    }
 
 }
