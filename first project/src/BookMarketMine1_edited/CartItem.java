@@ -1,4 +1,4 @@
-package BookMarketMine;
+package BookMarketMine1_edited;
 
 public class CartItem {
     //북 객체를 담아내는 함수의 역할을 한다.

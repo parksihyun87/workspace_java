@@ -1,6 +1,4 @@
-package BookMarketMine;
-
-import java.util.Scanner;
+package BookMarketMine1_edited;
 
 public class Main {
     public static void main(String[] args) {

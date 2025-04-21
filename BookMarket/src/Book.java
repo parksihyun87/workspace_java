@@ -1,32 +1,17 @@
-public class Book {
-    String isbn;
-    String title;
-    int price;
+public class Book extends Item{
+
     String author;
     String description;
     String category;
     String publishDate;
 
     public Book(String isbn, String title, int price, String author, String description, String category, String publishDate) {
-        this.isbn = isbn;
-        this.title = title;
-        this.price = price;
+        super(isbn,title,price);
+        // 부모에서부터 상속받아서 넘어옴.
         this.author = author;
         this.description = description;
         this.category = category;
         this.publishDate = publishDate;
-    }
-
-    public String getIsbn() {
-        return isbn;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public int getPrice() {
-        return price;
     }
 
     public String getAuthor() {
@@ -43,10 +28,6 @@ public class Book {
 
     public String getPublishDate() {
         return publishDate;
-    }
-
-    public void setIsbn(String isbn) {
-        this.isbn = isbn;
     }
 
     public void setPrice(int price) {
