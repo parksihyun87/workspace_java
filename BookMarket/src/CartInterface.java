@@ -7,7 +7,7 @@ public interface CartInterface {
     void appendItem(Item item);
     void inCreaseItemCount(String id);
     Item deCreaseItemCount(String id);
-    void removeCartItem(int index);
+//    void removeCartItem(int index);
     void printCart();
 }
 // 오버라이드 하려면 이름 자료형 및 리턴 값 다 같아야 한다. 범용성을 위해서
