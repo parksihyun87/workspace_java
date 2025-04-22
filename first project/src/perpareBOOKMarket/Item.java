@@ -1,5 +1,4 @@
-import java.util.HashMap;
-import java.util.Map;
+package perpareBOOKMarket;
 
 public class Item {
     String itemId;
