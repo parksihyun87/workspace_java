@@ -1,5 +1,9 @@
 package BookMarketMine2_new;
 
+//작업 키워드
+// 1.어펜드 북스 형태 원본 비교
+// 1-1. 단순한 형태, 구조적 투영 생각하여 어펜드 북스 작성
+
 public class Cart {
     CartItem [] cartList=new CartItem[3];
     int itemCount;
