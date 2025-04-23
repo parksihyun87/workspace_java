@@ -1,15 +1,17 @@
 import java.util.ArrayList;
 import java.util.Scanner;
 
-public class ScoreManager {
+public class ScoreManager implements ScoreManagement {
+    //멤버 변수
     boolean mExitFlag;
+    boolean loginIdFlag=false;
     ArrayList<Admin> mAdmin=new ArrayList<>();
     ArrayList<ScoreData> mScoreList=new ArrayList<>();
     ScoreControl mScoreControl = new ScoreControl();
     Person mCurrentUser;
 
 
-    // 생성자 함수
+    // 생성자 함수 초기화
     public ScoreManager() {
         Admin a1=new Admin("aaa","111");
         Admin a2=new Admin("bbb","222");
@@ -28,10 +30,10 @@ public class ScoreManager {
         mScoreList.add(s3);
     }
 
+    // 메뉴부
     //<<첫번째 메뉴>>
     public void run(){
         while(true){
-            boolean loginIdFlag=false;
             System.out.println("메뉴 항목을 시작합니다.");
             System.out.println("<<성적처리>>");
             System.out.println("1.관리자 로그인");
@@ -42,43 +44,10 @@ public class ScoreManager {
 
             switch(inputNum){
                 case 1:
-                    System.out.println("관리자 로그인을 시작합니다.");
-                    System.out.println("이름입력");
-                    String inputName=input.nextLine();
-                    System.out.println("번호입력");
-                    String inputPhone=input.nextLine();
-                    System.out.println("id입력");
-                    String inputId=input.nextLine();
-                    System.out.println("pw입력");
-                    String inputPw=input.nextLine();
-
-
-                    for(Admin e:mAdmin){
-                        System.out.println("테스트0.반복");
-                        if(e.getId().equals(inputId)){
-                            System.out.println("테스트1");
-                            if(e.getPw().equals(inputPw)){
-                                loginIdFlag=true;
-                                System.out.println("로그인 성공");
-                                e.setName(inputName);
-                                e.setPhone(inputPhone);
-                                mCurrentUser=e;
-                                System.out.println(mCurrentUser.getName()+"관리자님 반갑습니다.");
-                                this.setScoreMenu();
-                                break;
-                            }else{
-                            System.out.println("비밀번호 틀림");
-                            break;
-                            }
-                        }
-                    }
-
-                    if(loginIdFlag==false){
-                        System.out.println("id가 틀렸음");
-                    }
-
+                    menuLogin();
+                    //로그인 기능 및 성공시 두번째 메뉴 진입
                     break;
-                    // *수정 키워드: 다른 클래스나 함수로 분리할지
+                    // *수정 키워드: 다른 클래스나 함수로 분리
                     
                 case 2:
                     System.out.println("종료합니다.");
@@ -96,7 +65,7 @@ public class ScoreManager {
     public void setScoreMenu(){
         boolean flagLogout=false;
         while(true){
-            System.out.println("두번쨰 메뉴임");
+            System.out.println("두번째 메뉴");
             System.out.println("<<성적처리>>");
             System.out.println("1.성적 입력");
             System.out.println("2.성적 검색");
@@ -122,20 +91,76 @@ public class ScoreManager {
                     break;
                 case 4:
                     flagLogout=true;
+                    mCurrentUser=null;
                     System.out.println("로그아웃 함");
                     break;
             }//스위치 끝
 
-            if(flagLogout=true){
+            if(flagLogout==true){
                 break;
             }
         }//와일문 끝
     }//셋 스코어메뉴 끝
 
 
-    //<메뉴 함수 모음부>
-    //메뉴 스코어 데이타(점수기록) 함수 시작
+    // 메뉴 함수 모음부
+    public void menuLogin(){
+        loginAccess();
+    }
+
     public void menuWriteScoreData(){
+        WriteScoreData();
+    }
+
+    public void menuFindScoreData(){
+        findDataById();
+    }
+
+    public void menuPrintScoreData(){
+        mScoreControl.printScoreData(mScoreList);
+    }
+
+    // 기능 함수 모음부
+    // 로그인 함수 + 함수안의 함수->두번째 메뉴 진입
+    @Override
+    public void loginAccess(){
+        Scanner input= new Scanner(System.in);
+        System.out.println("관리자 로그인을 시작합니다.");
+        System.out.println("이름입력");
+        String inputName=input.nextLine();
+        System.out.println("번호입력");
+        String inputPhone=input.nextLine();
+        System.out.println("id입력");
+        String inputId=input.nextLine();
+        System.out.println("pw입력");
+        String inputPw=input.nextLine();
+        for(Admin e:mAdmin){
+            loginIdFlag=false;
+            if(e.getId().equals(inputId)){
+                loginIdFlag=true;
+                if(e.getPw().equals(inputPw)){
+                    System.out.println("로그인 성공");
+                    e.setName(inputName);
+                    e.setPhone(inputPhone);
+                    mCurrentUser=e;
+                    System.out.println(mCurrentUser.getName()+"관리자님 반갑습니다.");
+
+                    this.setScoreMenu();
+                    break;
+                }else{
+                    System.out.println("비밀번호 틀림");
+                    break;
+                }
+            }
+        }
+        if(loginIdFlag==false){
+            System.out.println("id가 틀렸음");
+        }
+    }
+
+    //메뉴 스코어 데이타(점수기록) 함수 시작
+    @Override
+    public void WriteScoreData(){
         Scanner input= new Scanner(System.in);
         int inputCount=0;
 
@@ -146,43 +171,46 @@ public class ScoreManager {
             m.setKorean(inputKorean);
             System.out.println("영어점수:");
             int inputEnglish=input.nextInt();
+            m.setEnglish(inputEnglish);
             System.out.println("수학점수:");
             int inputMath=input.nextInt();
+            m.setMath(inputMath);
+            m.setUpdateScore();
             input.nextLine();
-            System.out.println("계속 입력여부 Y/N");
-            String inputConfirm= input.nextLine().toUpperCase();
             inputCount++;
-            if(inputConfirm.equals("N")){
-                break;
-            }
+
             if(inputCount==mScoreList.size()){
                 System.out.println("모든 학생의 입력이 끝났습니다.");
+                break;
+            }
+
+            System.out.println("계속 입력여부 Y/N");
+            String inputConfirm= input.nextLine().toUpperCase();
+            if(inputConfirm.equals("N")){
+                break;
             }
         }
     }// 스코어 데이타 끝.
     
     //파인드 스코어 데이타 시작
-    public void menuFindScoreData(){
+    @Override
+    public void findDataById(){
         Scanner input=new Scanner(System.in);
         System.out.println("검색할 학생의 학번 입력");
         String inputId=input.nextLine();
         for(ScoreData m:mScoreList){
             if(inputId.equals(m.getId())){
-                System.out.println("id:"+m.getId()+"pw:"+m.getName());
-                System.out.println(m.getKorean());
-                System.out.println(m.getEnglish());
-                System.out.println(m.getMath());
-                System.out.println(m.getTotalScore());
-                System.out.println(m.getAvgScore());
+                System.out.println("id:"+m.getId()+", pw:"+m.getName());
+                System.out.println("국어:"+m.getKorean());
+                System.out.println("영어:"+m.getEnglish());
+                System.out.println("수학:"+m.getMath());
+                System.out.println("총점:"+m.getTotalScore());
+                System.out.println("평균:"+m.getAvgScore());
                 break;
             }
         }
     }// 파인드스코어데이타 끝.
-
-    // 메뉴프린트스코어데이타 시작
-    public void menuPrintScoreData(){
-        mScoreControl.printScoreData(mScoreList);
-    }
-    // 프린트스코어데이타 끝
-
 }//스코어클래스 끝
+
+//최종: 기능적 이식, 함수의 인터페이스화 및 임플리먼트(최소)
+// menuFindScoreData(), printScoreData(ArrayList<ScoreData> scoreArray)

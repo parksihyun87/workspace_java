@@ -56,7 +56,14 @@ public class ScoreData extends Person{
     }
 
     public void setAvgScore(){
-        this.avgScore=(this.korean+this.english+this.math)/3;
+        double sumDouble=(double) this.korean+this.english+this.math;
+        this.avgScore= sumDouble/3;
+        // 수정 키워드: 간략, 정확
     }
 
+    //키워드 : 점수 업데이트 기능.
+    public void setUpdateScore(){
+        setTotalScore();
+        setAvgScore();
+    }
 }

@@ -1,5 +1,5 @@
 public class Admin extends Person{
-    // person에서 상속
+    // person에서 상속 id,name
     String pw;
     String phone;
 

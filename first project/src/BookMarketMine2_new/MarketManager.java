@@ -86,6 +86,7 @@ Cart mCart= new Cart();
         System.out.println("더할 isbn입력하세요");
         String isbn=input.nextLine();
         this.mCart.appnedBooks(this.bookList[0]);
+        // 기존 방식은 인덱스를 -1로  북을 찾아야 해당 인덱스 북을 찾아서 건네고 아니면 -1<i 에 걸려서 잘못된 입력 출력
     }
     public void menuDecreaseCartItem(){
 
