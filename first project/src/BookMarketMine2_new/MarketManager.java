@@ -4,12 +4,12 @@ import java.util.Scanner;
 
 public class MarketManager {
 boolean exitFlag;
-Book [] bookList=new Book[3];
+Book [] mBookList=new Book[3];
 Cart mCart= new Cart();
     public MarketManager(){
-        bookList[0]= new Book("ISBN1234","쉽게 배우는 JSP 웹프로그래밍",27000,"송미영","단계별로 쇼핑몰을 구현하며 배우는 JSP 웹프로그래밍","IT전문서","2018/10/08");
-        bookList[1]= new Book("ISBN1235","안드로이드 프로그래밍",33000,"우재남","실습 단계별 명쾌한 멘토링!","IT전문서","2022/01/22");
-        bookList[2]= new Book("ISBN1236","스크래치",22000,"고광일","컴퓨팅 사고력을 키우는 블록 코딩","컴퓨터 입문","2019/06/10");
+        mBookList[0]= new Book("ISBN1234","쉽게 배우는 JSP 웹프로그래밍",27000,"송미영","단계별로 쇼핑몰을 구현하며 배우는 JSP 웹프로그래밍","IT전문서","2018/10/08");
+        mBookList[1]= new Book("ISBN1235","안드로이드 프로그래밍",33000,"우재남","실습 단계별 명쾌한 멘토링!","IT전문서","2022/01/22");
+        mBookList[2]= new Book("ISBN1236","스크래치",22000,"고광일","컴퓨팅 사고력을 키우는 블록 코딩","컴퓨터 입문","2019/06/10");
     }
 
     public void run(){
@@ -72,31 +72,61 @@ Cart mCart= new Cart();
         }//while 메뉴 끝
     }// run method 끝
 
+    //case1
     public void menuConfirmInfo(){
 
     }
+
+    //case2
     public void menuConfirmItemCart(){
-        this.mCart.cartCheck(bookList[0]);
+            for(int i=0;i<mCart.itemCount;i++){
+                this.mCart.cartCheck(mCart.cartList[i].getBook());
+            }
+        // 엠북리스트 안에 있는 북을 보내고 싶은데 어떻게 하면 좋을까,
+        // 1.복수로 보내자니 매개변수의 칸이 한정되어있고 그때마다 여러게 보낼수는 없고,
+        // 2.북리스트는 북의 형식이기는 하지만, 이렇게 보내면 인식이 불가능하다.
+        // 해당 함수에서 뉴 생성자로 받아보는 방법은,
+        // 해당 키워드: 배열 객체 클래스로 보내기
+        // 카트 체크에는 아이객체만 보내면서 for문으로 돌리는 수 밖에 없을수도
     }
+
+    //case3
     public void menuClearCart(){
 
     }
+
+    //case4
     public void menuAddCartItem(){
         Scanner input= new Scanner(System.in);
         System.out.println("더할 isbn입력하세요");
         String isbn=input.nextLine();
-        this.mCart.appnedBooks(this.bookList[0]);
-        // 기존 방식은 인덱스를 -1로  북을 찾아야 해당 인덱스 북을 찾아서 건네고 아니면 -1<i 에 걸려서 잘못된 입력 출력
+        
+        for(int i=0;i<mBookList.length;i++){
+            if(isbn.equals(this.mBookList[i].getIsbn())){
+                this.mCart.appnedBooks(this.mBookList[i]);
+                break;
+            }
+        }
+        // 처음에는 제대로 된 isbn으로 들어가는데 2번째 부터 같은 것이 복제.
+        // 기존 방식은 인덱스를 -1로 값 설정하고 북을 찾아야 해당 인덱스를 놓고 북을 찾아서 건네고 아니면 -1 < i 에 걸려서 예외처리 문구 출력.
     }
+
+    //case5
     public void menuDecreaseCartItem(){
 
     }
+
+    //case6
     public void menuDeleteCartItem(){
 
     }
+
+    //case7
     public void menuConfirmBill(){
 
     }
+
+    //case8
     public void menuAdminLogin(){
 
     }
