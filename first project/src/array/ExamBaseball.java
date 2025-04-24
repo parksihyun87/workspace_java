@@ -38,7 +38,8 @@ public class ExamBaseball {
             if(flag==true){
                 continue;
             }
-
+            // 핵심 키워드는 플래그를 표지로하여 같은 숫자가 발견되면 반복하게
+            // 하는 포문을 만든다는 것.
             arr[index]=number;
             // 0일때 한번은 무조건 들어감.
             ++index;

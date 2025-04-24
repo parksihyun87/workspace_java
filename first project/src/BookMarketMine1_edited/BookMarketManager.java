@@ -107,6 +107,7 @@ public class BookMarketManager {
             System.out.println();
         }
 
+
         while (true) {
             boolean exit = false;
             System.out.print("장바구니에 추가할 도서의 ID를 입력하세요 : ");
@@ -121,7 +122,9 @@ public class BookMarketManager {
                     break;
                 }
             }
+            //키워드: 입력만을 위한 자료
 
+            //출력만을 위한 부분
             if (index != -1) {
                 // 만약에 책이 있으면 해당 실행
                 System.out.println("장바구니에 추가하겠습니까? Y|N");

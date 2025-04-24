@@ -21,4 +21,12 @@ public class CartItem {
     public int getItemCount() {
         return itemCount;
     }
+
+    public void setBook(Book book) {
+        this.book = book;
+    }
+
+    public void setItemCount(int itemCount) {
+        this.itemCount = itemCount;
+    }
 }
