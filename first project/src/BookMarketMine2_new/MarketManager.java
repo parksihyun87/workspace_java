@@ -5,7 +5,7 @@ import java.util.Scanner;
 public class MarketManager {
 boolean exitFlag;
 Book [] mBookList=new Book[3];
-Cart mCart= new Cart();
+Cart mCart= new Cart();// 생성이후로부터 도면의 내용을 다 가지면서 영향받는 분신이다.
     public MarketManager(){
         mBookList[0]= new Book("ISBN1234","쉽게 배우는 JSP 웹프로그래밍",27000,"송미영","단계별로 쇼핑몰을 구현하며 배우는 JSP 웹프로그래밍","IT전문서","2018/10/08");
         mBookList[1]= new Book("ISBN1235","안드로이드 프로그래밍",33000,"우재남","실습 단계별 명쾌한 멘토링!","IT전문서","2022/01/22");
@@ -113,7 +113,7 @@ Cart mCart= new Cart();
                     }
                 }
                 if(!flag){
-                    this.mCart.appnedBooks(this.mBookList[i]);
+                    this.mCart.appendItem(this.mBookList[i]);
                     break;
                 }
             }
@@ -124,12 +124,31 @@ Cart mCart= new Cart();
 
     //case5
     public void menuDecreaseCartItem(){
-
+        Scanner input = new Scanner(System.in);
+        System.out.println("줄일 isbn 입력");
+        String inputIsbn = input.nextLine();
+        for(int index=0; index < mCart.itemCount; index++){
+            if(inputIsbn.equals(mCart.cartList[index].getBook().getIsbn())){
+                this.mCart.decreaseItem(index);
+                if(this.mCart.cartList[index].getItemCount()==0){
+                    mCart.deleteItem(index);
+                }
+                break;
+            }
+        }
     }
 
     //case6
     public void menuDeleteCartItem(){
-
+        Scanner input = new Scanner(System.in);
+        System.out.println("지울 isbn 입력");
+        String inputIsbn = input.nextLine();
+        for(int index=0; index < mCart.itemCount; index++){
+            if(inputIsbn.equals(mCart.cartList[index].getBook().getIsbn())){
+                System.out.println(mCart.deleteItem(index).getTitle()+"을 삭제하였습니다.");
+                break;
+            }
+        }
     }
 
     //case7
