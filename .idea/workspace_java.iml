@@ -6,6 +6,7 @@
       <sourceFolder url="file://$MODULE_DIR$/BookMarket_20250423/BookMarket/src" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/address/src" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/JobKetMon/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/JobKetMon" isTestSource="false" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
