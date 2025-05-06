@@ -86,6 +86,7 @@ public class UserDBConnect {
 
 
     public User selectUser(String user_name){
+        int count= this.countRecord();
         String sql= "select * from usertbl where username = '" + user_name+ "'" ;
         User user = null;
         try{
@@ -114,7 +115,7 @@ public class UserDBConnect {
 
 
     public void inputUser(User user){
-        String sql = "insert into usertbl values(?,?,?,?,?,?,?,?)";//null이라고 추가해서 띄우는 것 가능.
+        String sql = "insert into usertbl values(?,?,?,?,?,?,?,?, null)";
         try{
             PreparedStatement pstmt = this.conn.prepareStatement(sql); //
             // 동적 쿼리 명령 객체 가져옴.

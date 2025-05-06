@@ -30,8 +30,8 @@ public class Main {
         System.out.println(user.getMdate());
 
         System.out.println("===".repeat(5));
-//        db.inputUser(new User("kja","김진아",2001,"경기","111","111111",163, Date.valueOf("2025-04-30")));
-        db.deleteUser("김진아");
+        db.inputUser(new User("kja","김진아",2001,"경기","111","111111",163, Date.valueOf("2025-04-30")));
+//        db.deleteUser("강호동");
         db.releaseDB();//?
     }
 }
